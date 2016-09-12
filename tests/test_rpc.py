@@ -351,3 +351,18 @@ def test_extra_vars():
     args = {'a': 1}
     result = rpc({'jsonrpc': '2.0', 'method': 'add', 'id': 'test-rpc', 'params': args}, b=3)
     assert result['result'] == 4
+    
+    rpc['array_params_with_kwargs'] = lambda a, req: a + req.request_id
+    args = [1]
+    
+    class Req:
+        pass
+
+    req = Req()
+    req.request_id = 3
+    result = rpc({
+        'jsonrpc': '2.0', 
+        'method': 'array_params_with_kwargs', 
+        'id': 'test-rpc', 
+        'params': args}, req=req)
+    assert result['result'] == 4
