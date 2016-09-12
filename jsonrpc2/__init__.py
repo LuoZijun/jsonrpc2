@@ -153,7 +153,7 @@ class JsonRpcBase(object):
             args = params
         elif isinstance(params, dict):
             kwargs.update(params)
-            kwargs.update(extra_vars)
+        kwargs.update(extra_vars)
 
         try:
             result = method(*args, **kwargs)
